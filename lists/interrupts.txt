@@ -1,0 +1,46 @@
+Shield Bash
+Pummel
+Kick
+Earth Shock
+War Stomp
+Concussion Blow
+Charge Stun
+Intercept Stun
+Hammer of Justice
+Cheap Shot
+Gouge
+Kidney Shot
+Silence
+Counterspell
+Counterspell - Silenced
+Bash
+Fear
+Howl of Terror
+Psychic Scream
+Intimidating Shout
+Starfire Stun
+Revenge Stun
+Improved Concussive Shot
+Impact
+Pyroclasm
+Blackout
+Stun
+Mace Stun Effect
+Earthshaker
+Repentance
+Scatter Shot
+Blind
+Hibernate
+Wyvern Sting
+Rough Copper Bomb
+Large Copper Bomb
+Small Bronze Bomb
+Big Bronze Bomb
+Big Iron Bomb
+Mithril Frag Bomb
+Hi-Explosive Bomb
+Dark Iron Bomb
+Iron Grenade
+M73 Frag Grenade
+Thorium Grenade
+Goblin Mortar
