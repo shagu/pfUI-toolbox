@@ -42,13 +42,33 @@ while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
     $name_loc6 = str_replace("'", "\'", $name_loc6);
     $name_loc8 = str_replace("'", "\'", $name_loc8);
 
-    file_put_contents($file . "enGB" . ".lua", "  '$name_loc0',\n", FILE_APPEND);
-    file_put_contents($file . "koKR" . ".lua", "  '$name_loc1',\n", FILE_APPEND);
-    file_put_contents($file . "frFR" . ".lua", "  '$name_loc2',\n", FILE_APPEND);
-    file_put_contents($file . "deDE" . ".lua", "  '$name_loc3',\n", FILE_APPEND);
-    file_put_contents($file . "zhCN" . ".lua", "  '$name_loc4',\n", FILE_APPEND);
-    file_put_contents($file . "esES" . ".lua", "  '$name_loc6',\n", FILE_APPEND);
-    file_put_contents($file . "ruRU" . ".lua", "  '$name_loc8',\n", FILE_APPEND);
+    if($name_loc0 != "") {
+      file_put_contents($file . "enGB" . ".lua", "  '$name_loc0',\n", FILE_APPEND);
+    }
+
+    if($name_loc1 != "") {
+      file_put_contents($file . "koKR" . ".lua", "  '$name_loc1',\n", FILE_APPEND);
+    }
+
+    if($name_loc2 != "") {
+      file_put_contents($file . "frFR" . ".lua", "  '$name_loc2',\n", FILE_APPEND);
+    }
+
+    if($name_loc3 != "") {
+      file_put_contents($file . "deDE" . ".lua", "  '$name_loc3',\n", FILE_APPEND);
+    }
+
+    if($name_loc4 != "") {
+      file_put_contents($file . "zhCN" . ".lua", "  '$name_loc4',\n", FILE_APPEND);
+    }
+
+    if($name_loc6 != "") {
+      file_put_contents($file . "esES" . ".lua", "  '$name_loc6',\n", FILE_APPEND);
+    }
+
+    if($name_loc8 != "") {
+      file_put_contents($file . "ruRU" . ".lua", "  '$name_loc8',\n", FILE_APPEND);
+    }
 }
 
 // finalize
