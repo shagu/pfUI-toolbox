@@ -28,5 +28,8 @@ base:
 merge: base
 	tools/merge.sh
 
+install:
+	cp out/locales*.lua ../pfUI/env
+
 translations:
 	cd ../pfUI && ../pfUI-toolbox/tools/update-translations.sh
