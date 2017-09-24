@@ -10,7 +10,7 @@ SELECT
 aowow_spell.spellID as id,
 aowow_spellduration.durationBase as duration,
 aowow_spellicons.iconname as icon,
-spellname_loc0 as name_enGB,
+spellname_loc0 as name_enUS,
 Spell_frFR.spellname as name_frFR,
 Spell_koKR.spellname as name_koKR,
 Spell_deDE.spellname as name_deDE,
@@ -46,7 +46,7 @@ $query = $mysql->query($command);
 
 $file = "out/tmp/debuffs_";
 
-file_put_contents($file . "enGB" . ".lua", "pfUI_locale[\"enGB\"][\"debuffs\"] = {\n");
+file_put_contents($file . "enUS" . ".lua", "pfUI_locale[\"enUS\"][\"debuffs\"] = {\n");
 file_put_contents($file . "koKR" . ".lua", "pfUI_locale[\"koKR\"][\"debuffs\"] = {\n");
 file_put_contents($file . "frFR" . ".lua", "pfUI_locale[\"frFR\"][\"debuffs\"] = {\n");
 file_put_contents($file . "deDE" . ".lua", "pfUI_locale[\"deDE\"][\"debuffs\"] = {\n");
@@ -57,7 +57,7 @@ file_put_contents($file . "esES" . ".lua", "pfUI_locale[\"esES\"][\"debuffs\"] =
 
 if(!empty($query)) {
   while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
-    $name0 = $fetch["name_enGB"];
+    $name0 = $fetch["name_enUS"];
     $name1 = $fetch["name_koKR"];
     $name2 = $fetch["name_frFR"];
     $name3 = $fetch["name_deDE"];
@@ -73,7 +73,7 @@ if(!empty($query)) {
        (strpos($name0, 'Test ') === false) &&
        (strpos($name0, 'Copy of') === false) ) {
 
-      file_put_contents($file . "enGB" . ".lua", "  [\"" . $name0 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "enUS" . ".lua", "  [\"" . $name0 . "\"] = $duration,\n", FILE_APPEND);
       file_put_contents($file . "koKR" . ".lua", "  [\"" . $name1 . "\"] = $duration,\n", FILE_APPEND);
       file_put_contents($file . "frFR" . ".lua", "  [\"" . $name2 . "\"] = $duration,\n", FILE_APPEND);
       file_put_contents($file . "deDE" . ".lua", "  [\"" . $name3 . "\"] = $duration,\n", FILE_APPEND);
@@ -85,7 +85,7 @@ if(!empty($query)) {
   }
 }
 
-file_put_contents($file . "enGB" . ".lua", "}\n", FILE_APPEND);
+file_put_contents($file . "enUS" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "koKR" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "frFR" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "deDE" . ".lua", "}\n", FILE_APPEND);
