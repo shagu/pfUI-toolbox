@@ -44,13 +44,13 @@ AND aowow_spell.spellname_loc0 NOT LIKE \'%OLD%\'
 ORDER BY spellname_loc0, rank_loc0 DESC
 ';
 
-$file_enUS = "spells_enUS.lua";
-$file_frFR = "spells_frFR.lua";
-$file_deDE = "spells_deDE.lua";
-$file_zhCN = "spells_zhCN.lua";
-$file_ruRU = "spells_ruRU.lua";
-$file_koKR = "spells_koKR.lua";
-$file_esES = "spells_esES.lua";
+$file_enUS = "out/tmp/spells_enUS.lua";
+$file_frFR = "out/tmp/spells_frFR.lua";
+$file_deDE = "out/tmp/spells_deDE.lua";
+$file_zhCN = "out/tmp/spells_zhCN.lua";
+$file_ruRU = "out/tmp/spells_ruRU.lua";
+$file_koKR = "out/tmp/spells_koKR.lua";
+$file_esES = "out/tmp/spells_esES.lua";
 
 file_put_contents($file_enUS, "pfUI_locale[\"enUS\"][\"spells\"] = {\n");
 file_put_contents($file_frFR, "pfUI_locale[\"frFR\"][\"spells\"] = {\n");

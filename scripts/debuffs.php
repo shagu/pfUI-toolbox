@@ -44,7 +44,7 @@ ORDER BY `rank_loc0` DESC
 
 $query = $mysql->query($command);
 
-$file = "./debuffs_";
+$file = "out/tmp/debuffs_";
 
 file_put_contents($file . "enGB" . ".lua", "pfUI_locale[\"enGB\"][\"debuffs\"] = {\n");
 file_put_contents($file . "koKR" . ".lua", "pfUI_locale[\"koKR\"][\"debuffs\"] = {\n");

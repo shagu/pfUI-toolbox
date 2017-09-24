@@ -3,7 +3,7 @@
 
 ini_set('memory_limit', '-1');
 
-$file = "selldata.lua";
+$file = "out/selldata.lua";
 $mysql = new mysqli("127.0.0.1", "mangos", "mangos", "mangos");
 if($mysql->connect_errno != 0){	echo "cant connect to database"; }
 $mysql->set_charset("utf8");

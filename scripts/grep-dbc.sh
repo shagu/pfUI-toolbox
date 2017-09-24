@@ -18,49 +18,42 @@ for loc in $locales; do
   # fix for custom ruRU clients
   if [ "$loc" = "ruRU" ]; then index=0; fi
 
-  file="../out/locales_${loc}.lua"
-  echo "building ${file}..."
+  file="out/locales_${loc}.lua"
 
   # main-header
   echo "pfUI_locale[\"${loc}\"] = {}" > $file
-  
-  # classes
-  if [ -f "ChrClasses_${loc}.dbc.csv" ]; then
-    classes="WARLOCK WARRIOR HUNTER MAGE PRIEST DRUID PALADIN SHAMAN ROGUE"
 
+  if [ -f "DBC/ChrClasses_${loc}.dbc.csv" ]; then
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"class\"] = {" >> $file
 
+    classes="WARLOCK WARRIOR HUNTER MAGE PRIEST DRUID PALADIN SHAMAN ROGUE"
     for class in $classes; do
-      trans=$(grep $class ChrClasses_${loc}.dbc.csv | cut -d , -f $(expr $index + 6))
+      trans=$(grep $class DBC/ChrClasses_${loc}.dbc.csv | cut -d , -f $(expr $index + 6))
       echo "  [${trans}] = \"$class\"," >> $file
     done
 
     echo "}" >> $file
   fi
 
-  # bagtypes
-  if [ -f "ItemSubClass_${loc}.dbc.csv" ]; then
-    quiver=$(grep "^11,2," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    soulbag=$(grep "^1,1," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    bag=$(grep "^1,0," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+  if [ -f "DBC/ItemSubClass_${loc}.dbc.csv" ]; then
+    quiver=$(grep "^11,2," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    soulbag=$(grep "^1,1," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    bag=$(grep "^1,0," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"bagtypes\"] = {" >> $file
     echo "  [$quiver] = \"QUIVER\"," >> $file
     echo "  [$soulbag] = \"SOULBAG\"," >> $file
     echo "  [$bag] = \"DEFAULT\"," >> $file
-    echo "}" >> $file   
-  fi
+    echo "}" >> $file
 
-  # itemsubclass
-  if [ -f "ItemSubClass_${loc}.dbc.csv" ]; then
-    wand=$(grep "^2,19," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    thrown=$(grep "^2,16," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    gun=$(grep "^2,3," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    crossbow=$(grep "^2,18," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    bullet=$(grep "^6,3," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    arrow=$(grep "^6,2," ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    wand=$(grep "^2,19," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    thrown=$(grep "^2,16," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    gun=$(grep "^2,3," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    crossbow=$(grep "^2,18," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    bullet=$(grep "^6,3," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    arrow=$(grep "^6,2," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"itemtypes\"] = {" >> $file
@@ -73,11 +66,11 @@ for loc in $locales; do
     echo "}" >> $file
   fi
 
-  if [ -f "Spell_${loc}.dbc.csv" ]; then
-    holy_light=$(grep "^3472," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    flash_heal=$(grep "^2061," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    healing_touch=$(grep "^3735," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    healing_wave=$(grep "^331," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+  if [ -f "DBC/Spell_${loc}.dbc.csv" ]; then
+    holy_light=$(grep "^3472," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    flash_heal=$(grep "^2061," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    healing_touch=$(grep "^3735," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    healing_wave=$(grep "^331," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"rangecheck\"] = {" >> $file
@@ -88,8 +81,8 @@ for loc in $locales; do
     echo "}" >> $file
 
 
-    wing_clip=$(grep "^2974," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    arcane_shot=$(grep "^3044," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    wing_clip=$(grep "^2974," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    arcane_shot=$(grep "^3044," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"hunterpaging\"] = {" >> $file
@@ -98,8 +91,8 @@ for loc in $locales; do
     echo "}" >> $file
 
 
-    aimed_shot=$(grep "^19434," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    multi_shot=$(grep "^20735," Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    aimed_shot=$(grep "^19434," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
+    multi_shot=$(grep "^20735," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"customcast\"] = {" >> $file
