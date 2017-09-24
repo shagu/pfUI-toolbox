@@ -57,13 +57,13 @@ file_put_contents($file . "esES" . ".lua", "pfUI_locale[\"esES\"][\"debuffs\"] =
 
 if(!empty($query)) {
   while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
-    $name0 = $fetch["name_enUS"];
-    $name1 = $fetch["name_koKR"];
-    $name2 = $fetch["name_frFR"];
-    $name3 = $fetch["name_deDE"];
-    $name4 = $fetch["name_zhCN"];
-    $name6 = $fetch["name_esES"];
-    $name8 = $fetch["name_ruRU"];
+    $name0 = addslashes($fetch["name_enUS"]);
+    $name1 = addslashes($fetch["name_koKR"]);
+    $name2 = addslashes($fetch["name_frFR"]);
+    $name3 = addslashes($fetch["name_deDE"]);
+    $name4 = addslashes($fetch["name_zhCN"]);
+    $name6 = addslashes($fetch["name_esES"]);
+    $name8 = addslashes($fetch["name_ruRU"]);
     $icon  = $fetch["icon"];
     $duration = $fetch["duration"] / 1000;
 
