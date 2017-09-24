@@ -16,7 +16,7 @@ $query = $mysql->query("
   WHERE type = 8 ORDER BY name_loc0"
 );
 
-file_put_contents($file . "enGB" . ".lua", "pfUI_locale[\"enGB\"][\"critters\"] = {\n");
+file_put_contents($file . "enUS" . ".lua", "pfUI_locale[\"enUS\"][\"critters\"] = {\n");
 file_put_contents($file . "koKR" . ".lua", "pfUI_locale[\"koKR\"][\"critters\"] = {\n");
 file_put_contents($file . "frFR" . ".lua", "pfUI_locale[\"frFR\"][\"critters\"] = {\n");
 file_put_contents($file . "deDE" . ".lua", "pfUI_locale[\"deDE\"][\"critters\"] = {\n");
@@ -26,7 +26,7 @@ file_put_contents($file . "ruRU" . ".lua", "pfUI_locale[\"ruRU\"][\"critters\"] 
 
 while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
     // fetch names
-    $name_loc0 = $fetch["name_loc0"]; // enGB
+    $name_loc0 = $fetch["name_loc0"]; // enUS
     $name_loc1 = $fetch["name_loc1"]; // koKR
     $name_loc2 = $fetch["name_loc2"]; // frFR
     $name_loc3 = $fetch["name_loc3"]; // deDE
@@ -43,7 +43,7 @@ while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
     $name_loc8 = str_replace("'", "\'", $name_loc8);
 
     if($name_loc0 != "") {
-      file_put_contents($file . "enGB" . ".lua", "  '$name_loc0',\n", FILE_APPEND);
+      file_put_contents($file . "enUS" . ".lua", "  '$name_loc0',\n", FILE_APPEND);
     }
 
     if($name_loc1 != "") {
@@ -72,7 +72,7 @@ while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
 }
 
 // finalize
-file_put_contents($file . "enGB" . ".lua", "}\n", FILE_APPEND);
+file_put_contents($file . "enUS" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "koKR" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "frFR" . ".lua", "}\n", FILE_APPEND);
 file_put_contents($file . "deDE" . ".lua", "}\n", FILE_APPEND);
