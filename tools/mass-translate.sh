@@ -19,7 +19,7 @@ function SearchTranslation () {
     if [ "$loc" = "ruRU" ]; then index=0; fi
 
     if [ -f DBC/Spell_${loc}.dbc.csv ]; then
-      echo "  ${before}$(cut -d , -f 1,121-130 DBC/Spell_${loc}.dbc.csv | grep "^$id," | cut -d , -f $(expr $index + 2))${after}" >> out/tmp/${basename}_${loc}.lua
+      echo "${before}$(cut -d , -f 1,121-130 DBC/Spell_${loc}.dbc.csv | grep "^$id," | cut -d , -f $(expr $index + 2))${after}" >> out/tmp/${basename}_${loc}.lua
     fi
 
     index=$(expr $index + 1)

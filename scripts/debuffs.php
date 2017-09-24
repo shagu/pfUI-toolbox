@@ -68,17 +68,18 @@ if(!empty($query)) {
     $duration = $fetch["duration"] / 1000;
 
     if ( (!isset($saved[$name0])) &&
+       ($name0 != "") &&
        (strpos($name0, 'OLD') === false) &&
        (strpos($name0, 'Test ') === false) &&
        (strpos($name0, 'Copy of') === false) ) {
 
-      file_put_contents($file . "enGB" . ".lua", "    [\"" . $name0 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "koKR" . ".lua", "    [\"" . $name1 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "frFR" . ".lua", "    [\"" . $name2 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "deDE" . ".lua", "    [\"" . $name3 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "zhCN" . ".lua", "    [\"" . $name4 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "esES" . ".lua", "    [\"" . $name6 . "\"] = $duration,\n", FILE_APPEND);
-      file_put_contents($file . "ruRU" . ".lua", "    [\"" . $name8 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "enGB" . ".lua", "  [\"" . $name0 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "koKR" . ".lua", "  [\"" . $name1 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "frFR" . ".lua", "  [\"" . $name2 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "deDE" . ".lua", "  [\"" . $name3 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "zhCN" . ".lua", "  [\"" . $name4 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "esES" . ".lua", "  [\"" . $name6 . "\"] = $duration,\n", FILE_APPEND);
+      file_put_contents($file . "ruRU" . ".lua", "  [\"" . $name8 . "\"] = $duration,\n", FILE_APPEND);
     }
     $saved[$name0] = true;
   }

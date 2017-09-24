@@ -1,4 +1,4 @@
-all: static critters debuffs spells interrupts
+all: critters debuffs spells interrupts merge
 
 clean:
 	rm -fv DBC/*.csv
@@ -9,9 +9,6 @@ prepare: clean
 	mkdir -p DBC/ out/tmp/
 	cd DBC/ && wine ../tools/DBCUtil.exe
 	cd DBC/ && ../tools/csv2sql.sh
-
-static:
-	scripts/grep-dbc.sh
 
 critters:
 	scripts/critters.php
@@ -24,6 +21,12 @@ spells:
 
 interrupts:
 	tools/mass-translate.sh interrupts.txt
+
+base:
+	scripts/base.sh
+
+merge: base
+	tools/merge.sh
 
 translations:
 	cd ../pfUI && ../pfUI-toolbox/tools/update-translations.sh

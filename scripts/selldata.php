@@ -16,8 +16,8 @@ $num = 0;
 
 while($fetch = $query->fetch_array(MYSQLI_ASSOC)){
 
-if ($id > $num ) { 
-  $num = $id; 
+if ($id > $num ) {
+  $num = $id;
 }
 
     $id = $fetch["entry"];
@@ -39,7 +39,7 @@ if ($id > $num ) {
             file_put_contents($file, "\n  [$id]=\"$sell,$buy,$level\",", FILE_APPEND);
             $count = 0;
         }else{
-            file_put_contents($file, " [$id]=\"$sell,$buy,$level\",", FILE_APPEND);
+            file_put_contents($file, "  [$id]=\"$sell,$buy,$level\",", FILE_APPEND);
             $count = $count + 1;
         }
     }

@@ -86,13 +86,13 @@ while($spell_fetch = $spell_query->fetch_array(MYSQLI_ASSOC)){
   $name_esES       = str_replace("'", "\'", $name_esES);
 
   if ($name_loc0 != $old_name_loc0) {
-   file_put_contents($file_enUS, "  ['$name_loc0'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_frFR, "  ['$name_frFR'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_deDE, "  ['$name_deDE'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_zhCN, "  ['$name_zhCN'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_ruRU, "  ['$name_ruRU'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_koKR, "  ['$name_koKR'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
-   file_put_contents($file_esES, "  ['$name_esES'] = {t=$cast, icon=\"$icon\" };\n", FILE_APPEND);
+   file_put_contents($file_enUS, "  ['$name_loc0'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_frFR, "  ['$name_frFR'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_deDE, "  ['$name_deDE'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_zhCN, "  ['$name_zhCN'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_ruRU, "  ['$name_ruRU'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_koKR, "  ['$name_koKR'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
+   file_put_contents($file_esES, "  ['$name_esES'] = {t=$cast, icon=\"$icon\" },\n", FILE_APPEND);
    $old_name_loc0 = $name_loc0;
   }
 }
