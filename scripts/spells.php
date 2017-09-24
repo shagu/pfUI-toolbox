@@ -102,6 +102,7 @@ file_put_contents($file_frFR, "}\n", FILE_APPEND);
 file_put_contents($file_deDE, "}\n", FILE_APPEND);
 file_put_contents($file_zhCN, "}\n", FILE_APPEND);
 file_put_contents($file_ruRU, "}\n", FILE_APPEND);
+file_put_contents($file_koKR, "}\n", FILE_APPEND);
 file_put_contents($file_esES, "}\n", FILE_APPEND);
 
 ?>
