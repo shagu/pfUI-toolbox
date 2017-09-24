@@ -36,7 +36,8 @@ for loc in $locales; do
     echo "}" >> $file
   fi
 
-  if [ -f "DBC/ItemSubClass_${loc}.dbc.csv" ]; then
+
+  if [ -f "DBC/ItemSubClass_${loc}.dbc.csv" ] && [ -f "DBC/ItemClass_${loc}.dbc.csv" ]; then
     quiver=$(grep "^11,2," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
     soulbag=$(grep "^1,1," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
     bag=$(grep "^1,0," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
@@ -52,8 +53,9 @@ for loc in $locales; do
     thrown=$(grep "^2,16," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
     gun=$(grep "^2,3," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
     crossbow=$(grep "^2,18," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    bullet=$(grep "^6,3," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
-    arrow=$(grep "^6,2," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    #bullet=$(grep "^6,3," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    #arrow=$(grep "^6,2," DBC/ItemSubClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 11))
+    projectile=$(grep "^6,6,0," DBC/ItemClass_${loc}.dbc.csv | cut -d , -f $(expr $index + 4))
 
     echo >> $file
     echo "pfUI_locale[\"${loc}\"][\"itemtypes\"] = {" >> $file
@@ -61,8 +63,9 @@ for loc in $locales; do
     echo "  [\"INVTYPE_THROWN\"] = $thrown," >> $file
     echo "  [\"INVTYPE_GUN\"] = $gun," >> $file
     echo "  [\"INVTYPE_CROSSBOW\"] = $crossbow," >> $file
-    echo "  [\"INVTYPE_GUNPROJECTILE\"] = $bullet," >> $file
-    echo "  [\"INVTYPE_BOWPROJECTILE\"] = $arrow," >> $file
+    echo "  [\"INVTYPE_PROJECTILE\"] = $projectile," >> $file
+#    echo "  [\"INVTYPE_GUNPROJECTILE\"] = $bullet," >> $file
+#    echo "  [\"INVTYPE_BOWPROJECTILE\"] = $arrow," >> $file
     echo "}" >> $file
   fi
 
