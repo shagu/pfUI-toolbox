@@ -27,7 +27,7 @@ function SearchTranslation () {
 }
 
 for loc in $locales; do
-  echo "pfUI_locale[\"$loc\"][\"interrupts\"] = {" > out/tmp/${basename}_${loc}.lua
+  echo "pfUI_locale[\"$loc\"][\"$basename\"] = {" > out/tmp/${basename}_${loc}.lua
 done
 
 cat $file | while read -r line; do
