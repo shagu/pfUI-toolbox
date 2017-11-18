@@ -22,6 +22,9 @@ spells:
 interrupts:
 	tools/mass-translate.sh interrupts.txt
 
+totems:
+	tools/mass-translate.sh totems.txt
+
 base:
 	scripts/base.sh
 
