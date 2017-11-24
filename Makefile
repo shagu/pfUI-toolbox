@@ -1,4 +1,4 @@
-all: critters debuffs spells interrupts merge
+all: critters debuffs spells interrupts totems merge
 
 clean:
 	rm -fv DBC/*.csv
