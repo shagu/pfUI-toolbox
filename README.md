@@ -40,17 +40,7 @@ Grab and install the latest database from elysium's [github page](https://github
     mysql -u mangos -p mangos < aowow.sql
 
 ## Generate DBC Files
-Copy `tools/ad` to your world of warcraft directory and run it. You'll receive an `dbc/` folder with many of `*.dbc` files inside. Copy the `Spell.dbc` to pfUI-toolbox' `DBC/` folder as `DBC/Spell_enUS.dbc` where `enUS` should be replaced with the client localization you've used. In my case, I've used the extractor on every available gameclient and my folder looks like this:
-
-    $ ls -1 DBC/
-    Spell_deDE.dbc
-    Spell_enUS.dbc
-    Spell_esES.dbc
-    Spell_frFR.dbc
-    Spell_koKR.dbc
-    Spell_ruRU.dbc
-    Spell_zhCN.dbc
-
+Make sure to have gameclients of all languages you wish to build for available. The file `Data/dbc.MPQ` aswell as all `Data/patch-*.MPQ` inside the World of Warcraft directory have to be copied to a new folder with the name of the corresponding locale (e.g ruRU). Now follow the install instructions of [MPQExtractor](https://github.com/Kanma/MPQExtractor) to install the actual DBC extractor. Make sure it is installed correctly by typing `MPQExtractor` into a shell. Now have a look inside the `./tools/load_dbcs.sh` script and adjust the `PATH_MPQ` to the directory where your MPQ's are. Once done, type `./tools/load_dbcs.sh` to extract the required gamedata. The required structure now gets patched, renamed and moved to the `DBC` folder inside this repo.
 
 ## Run the Toolchain
 You're now ready to generate the locale dependent content. At the beginning you should instruct `make` to prepare everything. This has to be done to parse all DBC files into CSV and also generate SQL files which will be installed to your database.
