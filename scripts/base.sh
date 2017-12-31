@@ -70,20 +70,6 @@ for loc in $locales; do
   fi
 
   if [ -f "DBC/Spell_${loc}.dbc.csv" ]; then
-    holy_light=$(grep "^3472," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    flash_heal=$(grep "^2061," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    healing_touch=$(grep "^3735," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-    healing_wave=$(grep "^331," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
-
-    echo >> $file
-    echo "pfUI_locale[\"${loc}\"][\"rangecheck\"] = {" >> $file
-    echo "  [\"PALADIN\"] = $holy_light," >> $file
-    echo "  [\"PRIEST\"] = $flash_heal," >> $file
-    echo "  [\"DRUID\"] = $healing_touch," >> $file
-    echo "  [\"SHAMAN\"] = $healing_wave," >> $file
-    echo "}" >> $file
-
-
     wing_clip=$(grep "^2974," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
     arcane_shot=$(grep "^3044," DBC/Spell_${loc}.dbc.csv | cut -d , -f $(expr $index + 121))
 
