@@ -1,4 +1,4 @@
-all: critters debuffs spells interrupts totems merge
+all: critters spells interrupts totems merge
 
 clean:
 	rm -fv DBC/*.csv
@@ -13,11 +13,8 @@ prepare: clean
 critters:
 	scripts/critters.php
 
-debuffs:
-	scripts/debuffs.php
-
 spells:
-	scripts/spells.php
+	scripts/spells.lua
 
 interrupts:
 	tools/mass-translate.sh interrupts.txt

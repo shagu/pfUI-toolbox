@@ -46,6 +46,7 @@ local results = {
 }
 
 local playerspells = {}
+local skipspells = {}
 local spells = {}
 local debuffs = {}
 
@@ -106,15 +107,16 @@ local function FillTables(results, pspell)
     results.casttime = tonumber(results.casttime) or 0
     results.duration = tonumber(results.duration) or 0
     results.icon = string.gsub(results.icon,"\r","") -- *sigh*
-    results.name_enUS = string.gsub(results.name_enUS, "\'", "\\'")
+
+    for _, loc in pairs(locales) do
+      results["name_" .. loc] = results["name_" .. loc] and string.gsub(results["name_" .. loc], "\'", "\\'") or nil
+    end
 
     -- create castbars
     if results.casttime > 0 then
       if not spells["enUS"][results.name_enUS] or ( spells["enUS"][results.name_enUS].rank < results.rank and pspell ) then
         for _, loc in pairs(locales) do
           local name = results[_G["name_" .. loc]] or results["name_enUS"]
-          name = string.gsub(name, "\'", "\\'")
-
           spells[loc][name] = {
             cast = results.casttime,
             rank = results.rank,
@@ -124,26 +126,18 @@ local function FillTables(results, pspell)
       end
     end
 
+    -- create debuffs
     if ( results.dtype1 == "6" or results.dtype1 == "22" or
       results.dtype2 == "6" or results.dtype2 == "22" or
       results.dtype3 == "6" or  results.dtype3 == "22") and
-      results.duration > 0
+      results.duration > 500
     then
-      if not pspell and debuffs["enUS"][results.name_enUS] then
-        -- won't add further npc ranks
-      else
-        -- add debuff entry
-        for _, loc in pairs(locales) do
-          local name = results[_G["name_" .. loc]] or results["name_enUS"]
-          name = string.gsub(name, "\'", "\\'")
+      local duration = tonumber(results.duration / 1000)
 
-          debuffs[loc][name] = debuffs[loc][name] or {}
-          debuffs[loc][name][results.rank] = debuffs[loc][name][results.rank] or {}
-          debuffs[loc][name][results.rank] = {
-            duration = results.duration,
-            combo = results.name_enUS == "Rupture" and 2 or results.name_enUS == "Kidney Shot" and 1 or nil
-          }
-        end
+      for _, loc in pairs(locales) do
+        local name = results[_G["name_" .. loc]] or results["name_enUS"]
+        debuffs[loc][name] = debuffs[loc][name] or {}
+        debuffs[loc][name][results.rank] = pspell and duration or debuffs[loc][name][results.rank] or duration
       end
     end
   end
@@ -160,7 +154,9 @@ while query:fetch(results.learnable, "a") do
   local playerspells = mysql:execute(querySpell(results.learnable.spellID))
   while playerspells:fetch(results.spell, "a") do
     progress:Print([[aowow_spell WHERE effect1id != "24" AND effect1id != "36" AND effect1id != "53"]], "spells")
-    FillTables(results.spell, playerspells[results.learnable.spellID])
+    if not skipspells[results.spell] then
+      FillTables(results.spell, playerspells[results.spell])
+    end
   end
 end
 
@@ -177,32 +173,29 @@ for _, loc in pairs(locales) do
 
   -- write debuffs
   file:write("\npfUI_locale[\"" .. loc .. "\"][\"debuffs\"] = {\n")
-  for name, rtbl in pairs(debuffs[loc]) do
-    local combo = nil
-    file:write("  ['" .. name .. "']={r={")
+  for name, ranks in pairs(debuffs[loc]) do
+    file:write("  ['" .. name .. "']={")
 
-    -- merge durations if possible
-    local duration
-    if rtbl[1] then
-      duration = rtbl[1].duration
-    end
-
-    for rank, data in pairs(rtbl) do
-      if data.duration ~= duration then
-        duration = "NOMERGE"
+    local mergeduration = "NOMERGE"
+    if ranks[1] or ranks[2] then
+      mergeduration = ranks[1] or ranks[2]
+      for rank, duration in pairs(ranks) do
+        if duration ~= mergeduration then
+          mergeduration = "NOMERGE"
+          break
+        end
       end
-      if data.combo then combo = data.combo end
     end
 
-    if duration == "NOMERGE" then
-      for rank, data in pairs(rtbl) do
-        file:write("["..rank.."]="..data.duration..",")
+    if mergeduration == "NOMERGE" then
+      for rank, duration in pairs(ranks) do
+        file:write("["..rank.."]="..duration..",")
       end
     else
-      file:write("[0]="..duration..",")
+      file:write("[0]="..mergeduration..",")
     end
 
-    file:write("}" .. ( combo and (",c=" .. combo) or "") .. ",},\n")
+    file:write("},\n")
   end
   file:write("}\n")
 
