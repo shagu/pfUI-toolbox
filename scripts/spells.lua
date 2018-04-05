@@ -37,6 +37,41 @@ do -- nice progress display
   end
 end
 
+-- http://lua-users.org/wiki/SortedIteration
+function __genOrderedIndex( t )
+  local orderedIndex = {}
+  for key in pairs(t) do
+    table.insert( orderedIndex, key )
+  end
+  table.sort( orderedIndex )
+  return orderedIndex
+end
+
+function orderedNext(t, state)
+  local key = nil
+  if state == nil then
+    t.__orderedIndex = __genOrderedIndex( t )
+    key = t.__orderedIndex[1]
+  else
+    for i = 1,#t.__orderedIndex do
+      if t.__orderedIndex[i] == state then
+        key = t.__orderedIndex[i+1]
+      end
+    end
+  end
+
+  if key then
+    return key, t[key]
+  end
+
+  t.__orderedIndex = nil
+  return
+end
+
+function opairs(t)
+    return orderedNext, t, nil
+end
+
 local locales = { "enUS", "frFR", "koKR", "deDE", "ruRU", "esES", "zhCN" }
 
 local results = {
@@ -45,7 +80,7 @@ local results = {
   debuff = {},
 }
 
-local playerspells = {}
+local pspells = {}
 local skipspells = {}
 local spells = {}
 local debuffs = {}
@@ -146,7 +181,7 @@ end
 -- fetch player learnables first (PvE > PvE)
 local query = mysql:execute([[SELECT aowow_spell.effect1triggerspell FROM aowow_spell WHERE aowow_spell.effect1id = "36"]])
 while query:fetch(results.learnable, "a") do
-  playerspells[results.learnable.effect1triggerspell] = true
+  pspells[tonumber(results.learnable.effect1triggerspell)] = true
 end
 
 local query = mysql:execute([[ SELECT spellID FROM aowow_spell WHERE effect1id != "24" AND effect1id != "36" AND effect1id != "53"]])
@@ -154,8 +189,8 @@ while query:fetch(results.learnable, "a") do
   local playerspells = mysql:execute(querySpell(results.learnable.spellID))
   while playerspells:fetch(results.spell, "a") do
     progress:Print([[aowow_spell WHERE effect1id != "24" AND effect1id != "36" AND effect1id != "53"]], "spells")
-    if not skipspells[results.spell] then
-      FillTables(results.spell, playerspells[results.spell])
+    if not skipspells[results.spell.id] then
+      FillTables(results.spell, pspells[tonumber(results.spell.id)])
     end
   end
 end
@@ -166,14 +201,14 @@ for _, loc in pairs(locales) do
 
   -- write spells
   file:write("pfUI_locale[\"" .. loc .. "\"][\"spells\"] = {\n")
-  for name, data in pairs(spells[loc]) do
+  for name, data in opairs(spells[loc]) do
     file:write("  ['" .. name .. "']={t=" .. data.cast .. ",icon='" .. tostring(data.icon) .. "'},\n")
   end
   file:write("}\n")
 
   -- write debuffs
   file:write("\npfUI_locale[\"" .. loc .. "\"][\"debuffs\"] = {\n")
-  for name, ranks in pairs(debuffs[loc]) do
+  for name, ranks in opairs(debuffs[loc]) do
     file:write("  ['" .. name .. "']={")
 
     local mergeduration = "NOMERGE"
