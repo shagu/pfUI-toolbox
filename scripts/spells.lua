@@ -138,7 +138,7 @@ local function FillTables(results, pspell)
     not string.find(results.name_enUS, "OLD") and
     not string.find(results.name_enUS, "Copy of")
   then
-    results.rank = tonumber(string.sub(results.rank,6)) or 0
+    results.rank = tonumber(string.sub(results.rank,6)) or pspell and 1 or 0
     results.casttime = tonumber(results.casttime) or 0
     results.duration = tonumber(results.duration) or 0
     results.icon = string.gsub(results.icon,"\r","") -- *sigh*
@@ -172,16 +172,33 @@ local function FillTables(results, pspell)
       for _, loc in pairs(locales) do
         local name = results[_G["name_" .. loc]] or results["name_enUS"]
         debuffs[loc][name] = debuffs[loc][name] or {}
-        debuffs[loc][name][results.rank] = pspell and duration or debuffs[loc][name][results.rank] or duration
+
+        if pspell and debuffs[loc][name][0] then
+          debuffs[loc][name][0] = nil
+        end
+
+        if pspell then
+          debuffs[loc][name][results.rank] = duration
+        else
+          debuffs[loc][name][results.rank] = debuffs[loc][name][results.rank] or duration
+        end
       end
     end
   end
 end
 
--- fetch player learnables first (PvE > PvE)
-local query = mysql:execute([[SELECT aowow_spell.effect1triggerspell FROM aowow_spell WHERE aowow_spell.effect1id = "36"]])
-while query:fetch(results.learnable, "a") do
-  pspells[tonumber(results.learnable.effect1triggerspell)] = true
+do -- detect some player spells
+  -- spells that learn other spells, should only learn player spells
+  local query = mysql:execute([[SELECT aowow_spell.effect1triggerspell FROM aowow_spell WHERE aowow_spell.effect1id = "36"]])
+  while query:fetch(results.learnable, "a") do
+    pspells[tonumber(results.learnable.effect1triggerspell)] = true
+  end
+
+  -- spells that have requirements for other spells, should only exist for player spells
+  local query = mysql:execute([[SELECT aowow_skill_line_ability.spellID FROM aowow_skill_line_ability]])
+  while query:fetch(results.learnable, "a") do
+    pspells[tonumber(results.learnable.spellID)] = true
+  end
 end
 
 local query = mysql:execute([[ SELECT spellID FROM aowow_spell WHERE effect1id != "24" AND effect1id != "36" AND effect1id != "53"]])
@@ -206,14 +223,37 @@ for _, loc in pairs(locales) do
   end
   file:write("}\n")
 
+  -- clean/enhance debuffs
+  for name, ranks in pairs(debuffs[loc]) do
+    if ranks[0] and ( ranks[1] or ranks[2]) then
+      -- remove zero spells
+      ranks[0] = nil
+    end
+  end
+
+  -- add maxrank shortcuts
+  for name, ranks in pairs(debuffs[loc]) do
+    local max = 0
+
+    for rank, duration in pairs(ranks) do
+      if rank > max then
+        max = rank
+      end
+    end
+
+    if max > 0 then
+      ranks[0] = ranks[max]
+    end
+  end
+
   -- write debuffs
   file:write("\npfUI_locale[\"" .. loc .. "\"][\"debuffs\"] = {\n")
   for name, ranks in opairs(debuffs[loc]) do
     file:write("  ['" .. name .. "']={")
 
     local mergeduration = "NOMERGE"
-    if ranks[1] or ranks[2] then
-      mergeduration = ranks[1] or ranks[2]
+    if ranks[1] or ranks[2] or ranks[3] or ranks[4] or ranks[5] or ranks[6] or ranks[7] or ranks[8] then
+      mergeduration = ranks[1] or ranks[2] or ranks[3] or ranks[4] or ranks[5] or ranks[6] or ranks[7] or ranks[8]
       for rank, duration in pairs(ranks) do
         if duration ~= mergeduration then
           mergeduration = "NOMERGE"
