@@ -151,7 +151,7 @@ local function FillTables(results, pspell)
     if results.casttime > 0 then
       if not spells["enUS"][results.name_enUS] or ( spells["enUS"][results.name_enUS].rank < results.rank and pspell ) then
         for _, loc in pairs(locales) do
-          local name = results[_G["name_" .. loc]] or results["name_enUS"]
+          local name = results["name_" .. loc] or results["name_enUS"]
           spells[loc][name] = {
             cast = results.casttime,
             rank = results.rank,
@@ -170,7 +170,7 @@ local function FillTables(results, pspell)
       local duration = tonumber(results.duration / 1000)
 
       for _, loc in pairs(locales) do
-        local name = results[_G["name_" .. loc]] or results["name_enUS"]
+        local name = results["name_" .. loc] or results["name_enUS"]
         debuffs[loc][name] = debuffs[loc][name] or {}
 
         if pspell and debuffs[loc][name][0] then
@@ -275,4 +275,5 @@ for _, loc in pairs(locales) do
   file:write("}\n")
 
   file:close()
+  print("")
 end
