@@ -1,4 +1,4 @@
-all: critters spells dyndebuffs interrupts totems merge
+all: critters spells dyndebuffs interrupts resurrections totems merge
 
 clean:
 	rm -fv DBC/*.csv
@@ -18,6 +18,9 @@ spells:
 
 interrupts:
 	tools/mass-translate.sh interrupts.txt
+
+resurrections:
+	tools/mass-translate.sh resurrections.txt
 
 totems:
 	tools/mass-translate.sh totems.txt
