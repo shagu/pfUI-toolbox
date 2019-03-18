@@ -4,3 +4,4 @@ Rend
 Shadow Word: Pain
 Demoralizing Shout
 Frostbolt
+Gouge
