@@ -5,7 +5,7 @@ for locale in "deDE" "enUS" "frFR" "koKR" "ruRU" "zhCN" "zhTW" "esES"; do
 
   echo "pfUI_translation[\"$locale\"] = {" | tee $file_new
 
-  cat modules/* | sed "s/\(T\[\"\)/\n\1/" | grep -oP "T\[\".*?\"]" | sed 's/T\["\(.*\)"\]/\1/' | sort | uniq | while read -r entry; do
+  cat modules/* skins/*/* | sed "s/\(T\[\"\)/\n\1/" | grep -oP "T\[\".*?\"]" | sed 's/T\["\(.*\)"\]/\1/' | sort | uniq | while read -r entry; do
     old=$(grep -F "[\"$entry\"]" $file | head -n 1 2> /dev/null)
     if [ -z "$old" ] ; then
       old="  [\"$entry\"] = nil,"
