@@ -28,6 +28,9 @@ totems:
 dyndebuffs:
 	tools/mass-translateKV.sh dyndebuffs.txt
 
+judgements:
+	tools/mass-translate.sh judgements.txt
+
 base:
 	scripts/base.sh
 
